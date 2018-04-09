@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt_BR">
+{% include "header.html" %}
+    <body>
+{% include "navbar.html" %}
+        <main role="main">
+            <div class="card">
+                <div class="card-header d-flex justify-content-center">
+                    <div class="align-self-center text-center">
+                        <strong>{{ event.date|date:"l" }}</strong>
+                        <h1 class="display-4">{{ event.date.day }}</h1>
+    		    {{ event.date|date:"d/m/Y" }}
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h1>Evento <small>N&ordm;{{ event.id }}</small></h1>
+                    <div role="alert" class="d-flex alert {% if event.priority == '1' %} alert-success{% elif event.priority == '2' %} alert-warning{% elif event.priority == '3' %} alert-danger{% else %} alert-secondary{% endif %}">
+                        <div class="p-2 text-truncate">
+                            {{ event.event }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+{% include "footer.html" %}
+    </body>
+</html>
+<!--
+    vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
+-->

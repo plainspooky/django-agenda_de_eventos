@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt_BR">
+{% include "header.html" %}
+    <body>
+{% include "navbar.html" %}
+        <main role="main month">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <div class="align-self-center">
+                        <a href="{% url 'agenda-events-day' previous.year previous.month previous.day %}">&lt;&lt;</a>
+                    </div>
+                    <div class="align-self-center text-center">
+                        <strong>{{ day|date:"l" }}</strong>
+    		    <h1 class="display-4">{{ day.day }}</h1>
+                    {{ day|date:"d/m/Y" }}
+                    </div>
+                    <div class="align-self-center">
+                        <a href="{% url 'agenda-events-day' next.year next.month next.day %}"}}>&gt;&gt;</a>
+                    </div>
+                </div>
+                <div class="card-body">
+            {% if events|length > 0 %}
+            {% for event in events %}
+                <div role="alert" class="d-flex alert {% if event.priority == '1' %} alert-success{% elif event.priority == '2' %} alert-warning{% elif event.priority == '3' %} alert-danger{% else %} alert-secondary{% endif %}">
+                    <div class="p-2 text-truncate">
+                        <a class="text-dark" href="/{{ event.id }}">{{ event.event }}</a>
+                    </div>
+                </div>
+            {% endfor %}
+            {% else %}
+                    <div class="alert alert-secondary text-center">
+                        Sem eventos para este dia.
+                    </div>
+            {% endif %}
+                </div>
+            </div>
+        </main>
+{% include "footer.html" %}
+    </body>
+</html>
+<!--
+    vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
+-->

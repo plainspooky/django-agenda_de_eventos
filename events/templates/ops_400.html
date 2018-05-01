@@ -1,0 +1,20 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="pt_BR">
+{% include "header.html" %}
+    <body>
+{# include "navbar.html" #}
+        <main role="main">
+            <div class="container py-5">
+                <div class="col-12 col-md-6 offset-md-3 text-center">
+                    <img src="{% static 'ops.png' %}" class="img-fluid"/><br/>
+                    <h2>Erro 400<br/>
+                    <small>Requisição Ilegal!</small></h2>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>
+<!--
+    vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
+-->

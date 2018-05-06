@@ -19,6 +19,23 @@
                             {{ event.event }}
                         </div>
                     </div>
+                    {% if comments|length > 0 %}
+                        <hr/>
+                        {% for comment in comments %}
+                        <div class="container">
+                            <blockquote class="blockquote">
+                                <p class="mb-0">{{ comment.text }}</p>
+                                <footer class="blockquote-footer">{{ comment.author }} <small>comentou em {{ comment.commented }}</small></footer>
+                            </blockquote>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                    <div class="alert alert-secondary text-center">
+                        Não há comentários para este evento! Seja o primeiro a comentar!
+                    </div>
+                    {% endif %}
+                    <div>
+                    </div>
                 </div>
             </div>
         </main>

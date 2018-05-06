@@ -2,14 +2,14 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.timezone import localdate
 from django.views.defaults import bad_request, server_error
-from .models import Event
-from .forms import EventForm
+from .models import Event, Comment
+from .forms import EventForm, CommentForm
 
 from datetime import datetime, timedelta
 
 
 def split_date(string_date):
-    """transforma a data em YYYY-MM-DD em uma tupla de três valores para
+    """Transforma a data em YYYY-MM-DD em uma tupla de três valores para
     utilizar na visão de eventos de um determinado dia."""
     for value in string_date.split('-'):
         yield int(value)
@@ -17,16 +17,15 @@ def split_date(string_date):
 
 # Create your views here.
 def index(request):
+    """Exibe a página principal da aplicaão."""
     context = {
-        'priorities': Event.priorities_list,
-        'today': localdate(),
         'hide_new_button': 'true',
+            'priorities': Event.priorities_list,
+            'today': localdate(),
     }
     return render(request, 'index.html', context)
 
 
-def ops(request):
-    return render(request, 'ops.html')
 
 def all(request):
     """Exibe todas os eventos consolidados em uma única página, não recebe
@@ -104,6 +103,9 @@ def show(request, id: int):
     event = get_object_or_404(Event, id=id)
     context = {
         'event': event,
+            'comments': Comment.objects.filter(event=id).order_by('-commented'),
+            'form': CommentForm(),
+            'hide_new_button': 'true',
             'priorities': Event.priorities_list,
             'today': localdate(),
     }

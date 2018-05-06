@@ -19,7 +19,8 @@ def split_date(string_date):
 def index(request):
     context = {
         'priorities': Event.priorities_list,
-            'today': localdate(),
+        'today': localdate(),
+        'hide_new_button': 'true',
     }
     return render(request, 'index.html', context)
 

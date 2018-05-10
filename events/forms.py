@@ -11,4 +11,4 @@ class CommentForm(forms.ModelForm):
     """Formulário usado para a inserção de comentários em um evento."""
     class Meta:
         model = Comment
-        fields = ['text', 'author', 'email',]
+        fields = ['text', 'author', 'email', 'event']

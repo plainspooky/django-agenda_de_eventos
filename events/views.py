@@ -19,12 +19,11 @@ def split_date(string_date):
 def index(request):
     """Exibe a página principal da aplicaão."""
     context = {
-        'hide_new_button': 'true',
+        'hide_new_button': True,
             'priorities': Event.priorities_list,
             'today': localdate(),
     }
     return render(request, 'index.html', context)
-
 
 
 def all(request):
@@ -82,7 +81,6 @@ def edit(request):
     else:
         return bad_request(request, None, 'ops_400.html')
 
-# def error():
 
 def new(request):
     """Recebe os dados de um novo evento via POST, faz a validação dos dados
@@ -99,13 +97,20 @@ def new(request):
 
 
 def show(request, id: int):
-    """Visualização de um determinado evento, recebe o 'id' do evento."""
+    """Visualização de um determinado evento e de seus comentários, recebe
+    o 'id' do evento. Caso seja acessado via POST insere um novo comentário."""
     event = get_object_or_404(Event, id=id)
+
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid:
+            form.save()
+            return redirect('agenda-events-show', id=id)
+
     context = {
         'event': event,
             'comments': Comment.objects.filter(event=id).order_by('-commented'),
-            'form': CommentForm(),
-            'hide_new_button': 'true',
+            'hide_new_button': True,
             'priorities': Event.priorities_list,
             'today': localdate(),
     }

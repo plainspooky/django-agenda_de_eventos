@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from libgravatar import Gravatar
 
 # Create your models here.
 class Event(models.Model):
@@ -17,6 +18,10 @@ class Event(models.Model):
     event = models.CharField(max_length=80)
     priority = models.CharField(max_length=1, choices=priorities_list)
 
+    def number_of_comments(self):
+        """Retorna a quantidade de comentários dentro de um evento."""
+        return self.comment_event.count()
+
     def __str__(self):
         return self.event
 
@@ -30,5 +35,11 @@ class Comment(models.Model):
     commented = models.DateTimeField(default=timezone.now)
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='comment_event')
 
+    def avatar(self):
+        """Retorna a partir do endereço de e-mail, um avatar
+        configurado no Gravatar ou um dos avatares padrão deles."""
+        g = Gravatar(self.email)
+        return g.get_image(default='identicon')
+
     def __str__(self):
-        return "{} em {:%c}".format(self.author, self.commented)
+        return "{} commentou em {:%c}".format(self.author, self.commented)

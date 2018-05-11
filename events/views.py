@@ -20,7 +20,7 @@ def index(request):
     context = {
         'priorities': Event.priorities_list,
         'today': localdate(),
-        'hide_new_button': 'true',
+        'hide_new_button': True,
     }
     return render(request, 'index.html', context)
 

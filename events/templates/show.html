@@ -13,11 +13,50 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <h1>Evento <small>N&ordm;{{ event.id }}</small></h1>
                     <div role="alert" class="d-flex alert {% if event.priority == '1' %} alert-success{% elif event.priority == '2' %} alert-warning{% elif event.priority == '3' %} alert-danger{% else %} alert-secondary{% endif %}">
-                        <div class="p-2 text-truncate">
+                        <div class="p-2 text-truncated">
                             {{ event.event }}
                         </div>
+                    </div>
+                    {% if comments|length > 0 %}
+                        <div class="container py-2">
+                            {% for comment in comments %}
+                            <div class="media mb-2">
+                                <img class="mr-3" src="{{ comment.avatar }}">
+                                <div class="media-body">
+                                    <blockquote class="blockquote">&quot;{{ comment.text }}&quot;</blockquote>
+                                    <footer class="blockquote-footer"><strong>{{ comment.author }}</strong> | {{ comment.commented }}</footer>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                    <div class="alert alert-secondary text-center">
+                        Não há comentários para este evento! Seja o primeiro a comentar!
+                    </div>
+                    {% endif %}
+                    <hr/>
+                    <div class="container">
+                        <form method="post" action="">
+                            {% csrf_token %}
+                            <input type="hidden" name="event" value="{{ event.id }}">
+                            <div class="form-group">
+                                <input type="text" class="form-control form-control-sm" id="addInputComment" name="text" placeholder="Escreva seu comentário" required>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-auto">
+                                    <input type="text" class="form-control form-control-sm  mb-2" id="addInputAuthor" name="author" placeholder="Escreva seu nome" required>
+                                </div>
+                                <div class="col-auto">
+                                <div class="input-group mb-2">
+                                    <input type="email" class="form-control form-control-sm" id="addInputMail" name="email" placeholder="Escreva seu e-mail" required>
+                                </div>
+                                </div>
+                                <div class="col-auto mb-2">
+                                    <button type="submit" class="btn btn-sm btn-primary mb-2">Enviar comentário</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

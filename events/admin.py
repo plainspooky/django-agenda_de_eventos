@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Event
+from .models import Event, Comment
 
 # Register your models here.
 @admin.register(Event)
@@ -11,3 +11,5 @@ class EventAdmin(admin.ModelAdmin):
     list_filter = ("date", "priority", )
     list_editable = ("priority", )
     search_fields = ("event", "date", )
+
+admin.site.register(Comment)

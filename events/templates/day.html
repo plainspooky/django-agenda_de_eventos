@@ -25,7 +25,18 @@
                     <div class="p-2 text-truncate">
                         <a class="text-dark edit-event" id="event-{{ event.id }}-{{ event.priority }}" href="#">{{ event.event }}</a>
                     </div>
-                    <div class="p-2 ml-auto">
+                    <div class="p-2">
+                        <span class="badge badge-pill badge-dark">
+                            <a href="{% url 'agenda-events-show' event.id %}" class="text-white mb-2">
+                            {% if event.number_of_comments > 0 %}
+                                {{ event.number_of_comments }} comentário{{ event.number_of_comments|pluralize }}
+                            {% else %}
+                                Comentar!
+                            {% endif %}
+                            </a>
+                        </span>
+                    </div>
+                    <div class="p-2  ml-auto">
                         <a class="alert-link" href="{% url 'agenda-events-delete' event.id %}"><span class="oi oi-pencil">&times;</span></a>
                     </div>
                 </div>

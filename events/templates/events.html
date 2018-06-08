@@ -28,16 +28,19 @@
             {% endfor %}
                 </tbody>
             </table>
+            {% with events as paginated %}
+                {% include "pagination.html" %}
+            {% endwith %}
             <hr/>
-            <p>Você tem {{ events|length }} evento{{ events|pluralize }} registrado{{ events|pluralize }}.</p>
+            <p>Você tem {{ total }} evento{{ total|pluralize }} registrado{{ total|pluralize }}.</p>
             {% else %}
-                    <div class="alert alert-secondary text-center">
-                        Sem eventos cadastrados.
-                    </div>
+                <div class="alert alert-secondary text-center">
+                    Sem eventos cadastrados.
+                </div>
             {% endif %}
                 </div>
             </div>
-        </main>        
+        </main>
 {% include "footer.html" %}
     </body>
 </html>

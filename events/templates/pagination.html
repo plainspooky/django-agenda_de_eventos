@@ -1,0 +1,23 @@
+{% if paginated.has_other_pages %}
+    <ul class="pagination justify-content-center">
+    {% if paginated.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ paginated.previous_page_number }}">&laquo;</a>
+        </li>
+    {% else %}
+        <li class="page-item disabled"><a class="page-link">&laquo;</a></li>
+    {% endif %}
+    {% for page in paginated.paginator.page_range %}
+        {% if paginated.number == page %}
+        <li class="page-item active"><a class="page-link">{{ page }}</a></li>
+        {% else %}
+        <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+    {% endif %}
+    {% endfor %}
+    {% if paginated.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ paginated.next_page_number }}">&raquo;</a></li>
+    {% else %}
+        <li class="page-item disabled"><a class="page-link">&raquo;</a></li>
+    {% endif %}
+  </ul>
+{% endif %}

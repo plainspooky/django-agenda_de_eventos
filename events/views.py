@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator, InvalidPage
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.timezone import localdate
@@ -7,6 +8,7 @@ from .forms import EventForm, CommentForm
 
 from datetime import datetime, timedelta
 
+ITEMS_PER_PAGE = 5
 
 def split_date(string_date):
     """Transforma a data em YYYY-MM-DD em uma tupla de três valores para
@@ -27,10 +29,21 @@ def index(request):
 
 
 def all(request):
-    """Exibe todas os eventos consolidados em uma única página, não recebe
-    parâmetros."""
+    """Exibe todas os eventos consolidados em uma única página, recebe o
+    número da página a ser visualizada via GET."""
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(Event.objects.all(), ITEMS_PER_PAGE)
+    total = paginator.count
+
+    try:
+        events = paginator.page(page)
+    except InvalidPage:
+        events = paginator.page(1)
+
     context = {
-        'events': Event.objects.order_by('-date', '-priority', 'event'),
+        'events': events,
+            'total': total,
             'priorities': Event.priorities_list,
             'today': localdate(),
     }

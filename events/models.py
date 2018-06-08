@@ -18,6 +18,9 @@ class Event(models.Model):
     event = models.CharField(max_length=80)
     priority = models.CharField(max_length=1, choices=priorities_list)
 
+    class Meta:
+        ordering = ('-date', '-priority', 'event',)
+        
     def number_of_comments(self):
         """Retorna a quantidade de comentários dentro de um evento."""
         return self.comment_event.count()

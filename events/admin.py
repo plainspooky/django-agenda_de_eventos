@@ -6,10 +6,12 @@ from .models import Event, Comment
 class EventAdmin(admin.ModelAdmin):
     """Cria a classe EventAdmin com os parâmetros de exibição das
     informações do modelo Event dentro da interface de administração."""
-    list_display = ("date", "event", "priority", )
-    list_display_links = ("event", )
-    list_filter = ("date", "priority", )
-    list_editable = ("priority", )
-    search_fields = ("event", "date", )
+
+    list_display = ("date", "event", "priority")
+    list_display_links = ("event",)
+    list_filter = ("date", "priority")
+    list_editable = ("priority",)
+    search_fields = ("event", "date")
+
 
 admin.site.register(Comment)

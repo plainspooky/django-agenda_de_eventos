@@ -1,7 +1,12 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework import routers
 from . import views
 
+router = routers.DefaultRouter()
+router.register(r"events", views.EventViewSet)
+
 urlpatterns = [
+    path("api/v1/", include(router.urls)),
     path("", views.index, name="agenda-events-index"),
     path("all", views.all, name="agenda-events-all"),
     path("<int:id>", views.show, name="agenda-events-show"),

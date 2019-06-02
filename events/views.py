@@ -3,8 +3,11 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.timezone import localdate
 from django.views.defaults import bad_request, server_error
+from rest_framework import viewsets, mixins
+
 from .models import Event, Comment
 from .forms import EventForm, CommentForm
+from .serializers import EventSerializer
 
 from datetime import datetime, timedelta
 
@@ -19,6 +22,13 @@ def split_date(string_date):
 
 
 # Create your views here.
+class EventViewSet(viewsets.ModelViewSet):
+    """Disponibiliza os eventos da agenda como uma API REST."""
+
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+
+
 def index(request):
     """Exibe a página principal da aplicaão."""
     context = {

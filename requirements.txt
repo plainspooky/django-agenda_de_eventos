@@ -1,3 +1,4 @@
 Django>2.0.4
+djangorestframework==3.9.4
 libgravatar==0.2.3
 pytz==2018.4

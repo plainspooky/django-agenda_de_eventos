@@ -1,25 +1,21 @@
+from datetime import datetime, timedelta
+
 from django.core.paginator import Paginator, InvalidPage
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.timezone import localdate
 from django.views.defaults import bad_request, server_error
-from rest_framework import viewsets, mixins
+from rest_framework import filters, viewsets, mixins
 
 from .models import Event, Comment
 from .forms import EventForm, CommentForm
-from .serializers import EventSerializer
+from .serializers import CommentSerializer, EventSerializer
 
-from datetime import datetime, timedelta
+from .services import split_date
+
 
 ITEMS_PER_PAGE = 5
-
-
-def split_date(string_date):
-    """Transforma a data em YYYY-MM-DD em uma tupla de três valores para
-    utilizar na visão de eventos de um determinado dia."""
-    for value in string_date.split("-"):
-        yield int(value)
-
+FIRST_PAGE = 1
 
 # Create your views here.
 class EventViewSet(viewsets.ModelViewSet):
@@ -27,6 +23,15 @@ class EventViewSet(viewsets.ModelViewSet):
 
     queryset = Event.objects.all()
     serializer_class = EventSerializer
+
+
+class CommentViewSet(viewsets.ModelViewSet):
+    """Disponibiliza os eventos da agenda como uma API REST."""
+
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ("event__id",)
 
 
 def index(request):
@@ -43,14 +48,14 @@ def all(request):
     """Exibe todas os eventos consolidados em uma única página, recebe o
     número da página a ser visualizada via GET."""
 
-    page = request.GET.get("page", 1)
+    page = request.GET.get("page", FIRST_PAGE)
     paginator = Paginator(Event.objects.all(), ITEMS_PER_PAGE)
     total = paginator.count
 
     try:
         events = paginator.page(page)
     except InvalidPage:
-        events = paginator.page(1)
+        events = paginator.page(FIRST_PAGE)
 
     context = {
         "events": events,

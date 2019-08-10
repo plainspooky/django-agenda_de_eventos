@@ -4,6 +4,7 @@ from . import views
 
 router = routers.DefaultRouter()
 router.register(r"events", views.EventViewSet)
+router.register(r"comments", views.CommentViewSet)
 
 urlpatterns = [
     path("api/v1/", include(router.urls)),

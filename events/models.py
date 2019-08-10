@@ -25,6 +25,14 @@ class Event(models.Model):
         """Retorna a quantidade de comentários dentro de um evento."""
         return self.comment_event.count()
 
+    @property
+    def text_priority(self):
+        """ Converte o valor da prioridade no texto correspondente. """
+        for k, v in self.priorities_list:
+            if k == self.priority:
+                return v
+        return ""
+
     def __str__(self):
         return self.event
 
@@ -39,6 +47,9 @@ class Comment(models.Model):
     event = models.ForeignKey(
         Event, on_delete=models.CASCADE, related_name="comment_event"
     )
+
+    class Meta:
+        ordering = ("-commented",)
 
     def avatar(self):
         """Retorna a partir do endereço de e-mail, um avatar

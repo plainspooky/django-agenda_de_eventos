@@ -6,12 +6,12 @@ charset = utf-8
 indent_style = space
 trim_trailing_whitespace = true
 
-[*.py]
+[*.{js,py}]
 indent_size = 4
 insert_final_newline = true
 
-[*.{js,html}]
-indent_size = 4
+[*.html]
+indent_size = 2
 
 [*.md]
 max_line_length = off

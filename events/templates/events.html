@@ -1,49 +1,47 @@
 <!DOCTYPE html>
 <html lang="pt_BR">
 {% include "header.html" %}
-    <body>
+  <body>
 {% include "navbar.html" %}
-        <main role="main">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between">
-                    <h1>Eventos</h1>
-                </div>
-                <div class="card-body">
-            {% if events|length > 0 %}
-            <table class="table table-sm table-responsive-sm">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>Data</th><th>Evento</th>
-                    </tr>
-                </thead>
-                <tbody>
+    <main role="main">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between">
+          <h1>Eventos</h1>
+        </div>
+        <div class="card-body">
+        {% if events|length > 0 %}
+          <table class="table table-sm table-responsive-sm">
+            <thead class="thead-dark">
+              <tr>
+                <th>Data</th><th>Evento</th>
+              </tr>
+            </thead>
+            <tbody>
             {% for event in events %}
-                <tr class="{% if event.priority == '1' %} table-success{% elif event.priority == '2' %} table-warning{% elif event.priority == '3' %} table-danger{% else %} table-default{% endif %}">
-                    <td><a class="text-dark" href="{% url 'agenda-events-day' event.date.year event.date.month event.date.day %}">
-                        {{ event.date|date:"d/m/Y" }}</a></td>
-                    <td class="text-truncate">
-                        <a class="text-dark" href="{% url 'agenda-events-show' event.id %}">{{ event.event }}</a>
-                    </td>
-                </tr>
+              <tr class="{% if event.priority == '1' %} table-success{% elif event.priority == '2' %} table-warning{% elif event.priority == '3' %} table-danger{% else %} table-default{% endif %}">
+                <td>
+                  <a class="text-dark" href="{% url 'agenda-events-day' event.date.year event.date.month event.date.day %}">{{ event.date|date:"d/m/Y" }}</a>
+                </td>
+                <td class="text-truncate">
+                  <a class="text-dark" href="{% url 'agenda-events-show' event.id %}">{{ event.event }}</a>
+                </td>
+              </tr>
             {% endfor %}
-                </tbody>
-            </table>
-            {% with events as paginated %}
-                {% include "pagination.html" %}
-            {% endwith %}
-            <hr/>
-            <p>Você tem {{ total }} evento{{ total|pluralize }} registrado{{ total|pluralize }}.</p>
-            {% else %}
-                <div class="alert alert-secondary text-center">
-                    Sem eventos cadastrados.
-                </div>
-            {% endif %}
-                </div>
-            </div>
-        </main>
+            </tbody>
+          </table>
+          {% with events as paginated %}
+            {% include "pagination.html" %}
+          {% endwith %}
+          <hr/>
+          <p>Você tem {{ total }} evento{{ total|pluralize }} registrado{{ total|pluralize }}.</p>
+        {% else %}
+          <div class="alert alert-secondary text-center">
+            Sem eventos cadastrados.
+          </div>
+        {% endif %}
+        </div>
+      </div>
+    </main>
 {% include "footer.html" %}
-    </body>
+  </body>
 </html>
-<!--
-    vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
--->

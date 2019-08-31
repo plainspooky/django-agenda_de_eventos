@@ -1,0 +1,77 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="pt_BR">
+{% include "header.html" %}
+    <body>
+{% include "navbar.html" %}
+        <style>
+#searchResults{
+    display:none;
+    position:absolute;
+    z-index:1;
+    width:100%;
+    /* top:0; */
+    background-color:rgba(255, 255, 255, 0.75);
+}
+        </style>
+        <main role="main">
+            <div class="jumbotron rounded-0 text-center div-background">
+                <h1 class="display-5">Agenda de Eventos</h1>
+            </div>
+            <div class="container text-center">
+                <div class="row">
+                    <div class="col-md-6 offset-md-3">
+                        <input id="searchEvents" type="text" class="form-control  text-center"  name="search" placeholder="Buscar em eventos...">
+                        <br/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="searchResults" class="col-md-6 offset-md-2">
+                        as
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="z-index:1;">
+                    <div class="col-4 col-md-2 offset-md-3">
+                        <a href="#" data-toggle="modal" data-target="#addEvent"><img src="{% static 'new.png' %}" class="img-fluid"/></a><br/>
+                        <h6 class="py-2">Novo Evento</h6>
+                    </div>
+                    <div class="col-4 col-md-2">
+                        <a href="{% url 'agenda-events-day' today.year today.month today.day %}"><img src="{% static 'today.png' %}" class="img-fluid"/></a><br/>
+                        <h6 class="py-2">Eventos de Hoje</h6>
+                    </div>
+                    <div class="col-4 col-md-2">
+                        <a href="{% url 'agenda-events-all' %}"><img src="{% static 'all.png' %}" class="img-fluid"/></a><br/>
+                        <h6 class="py-2">Todos os Eventos</h6>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- offset-md-3 -->
+{% include "footer.html" %}
+<script>
+$('#searchEvents').keypress(function(event){
+
+    let dataToSearch = this.value
+    let keyTrigger = event.charCode == 32 ? true : false
+
+    if (dataToSearch.length == 0) {
+        $('#searchResults').empty()
+        $('#searchResults').hide()
+    }
+
+    if (keyTrigger || dataToSearch.length > 2){
+
+        $('#searchResults').append("<div>pi</div>")
+        $('#searchResults').show()
+
+    }
+
+
+})
+</script>
+    </body>
+</html>
+<!--
+    vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
+-->

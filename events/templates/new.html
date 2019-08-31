@@ -1,46 +1,43 @@
-        <!-- Modal -->
-        {% if hide_new_button != True %}
-        <div class="container mt-4 text-center">
-            <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#addEvent">Novo Evento</button>
-        </div>
-        {% endif %}
-        <div class="modal fade" id="addEvent" tabindex="-1" role="dialog" aria-labelledby="addEventLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <form action="{% url 'agenda-events-new' %}" method="post">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="addEventLabel">Novo</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            {% csrf_token %}
-                            <div class="form-group">
-                                <label for="addInputDate">Data</label>
-                                <input type="date" class="form-control" id="addInputDate" name="date" placeholder="Insira a data do evento" value="{{ today|date:'Y-m-d' }}" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="addInputEvent">Descrição</label>
-                                <input type="text" class="form-control" id="addInputEvent" name="event" placeholder="Descrição do evento" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="addInputPriority">Prioridade</label>
-                                <select class="form-control" id="addInputPriority" name="priority">
-                                {% for value, priority in priorities %}
-                                    <option value="{{ value }}">{{ priority }}</option>
-                                {% endfor %}
-                                </select>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-primary">Inserir</button>
-                        </div>
-                    </form>
-                </div>
+    <!-- Modal -->
+    {% if hide_new_button != True %}
+    <div class="container mt-4 text-center">
+      <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#addEvent">Novo Evento</button>
+    </div>
+    {% endif %}
+    <div class="modal fade" id="addEvent" tabindex="-1" role="dialog" aria-labelledby="addEventLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <form action="{% url 'agenda-events-new' %}" method="post">
+            <div class="modal-header">
+              <h5 class="modal-title" id="addEventLabel">Novo</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
+            <div class="modal-body">
+              {% csrf_token %}
+              <div class="form-group">
+                <label for="addInputDate">Data</label>
+                <input type="date" class="form-control" id="addInputDate" name="date" placeholder="Insira a data do evento" value="{{ today|date:'Y-m-d' }}" required>
+              </div>
+              <div class="form-group">
+                <label for="addInputEvent">Descrição</label>
+                <input type="text" class="form-control" id="addInputEvent" name="event" placeholder="Descrição do evento" required>
+              </div>
+              <div class="form-group">
+                <label for="addInputPriority">Prioridade</label>
+                <select class="form-control" id="addInputPriority" name="priority">
+                {% for value, priority in priorities %}
+                  <option value="{{ value }}">{{ priority }}</option>
+                {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Inserir</button>
+            </div>
+          </form>
         </div>
-<!--
-    vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
--->
+      </div>
+    </div>

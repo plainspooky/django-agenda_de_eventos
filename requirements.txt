@@ -2,4 +2,4 @@ Django>2.0.4
 djangorestframework==3.9.4
 libgravatar==0.2.3
 pytz==2018.4
-django-filters==0.2.1
+django-filter==2.1.0

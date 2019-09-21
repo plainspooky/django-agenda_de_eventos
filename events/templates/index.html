@@ -1,9 +1,6 @@
-{% load staticfiles %}
-<!DOCTYPE html>
-<html lang="pt_BR">
-{% include "header.html" %}
-  <body>
-{% include "navbar.html" %}
+{% extends "base.html" %}{% load staticfiles %}
+{% block content %}
+  {% include "layouts/navbar.html" %}
     <main role="main">
       <div class="jumbotron rounded-0 text-center div-background">
         <h1 class="display-5">Agenda de Eventos</h1>
@@ -34,6 +31,5 @@
         </div>
       </div>
     </main>
-{% include "footer.html" %}
-  </body>
-</html>
+{% include "modals/new.html" %}
+{% endblock %}

@@ -1,8 +1,6 @@
-<!DOCTYPE html>
-<html lang="pt_BR">
-{% include "header.html" %}
-  <body>
-{% include "navbar.html" %}
+{% extends "base.html" %}{% load staticfiles %}
+{% block content %}
+{% include "layouts/navbar.html" %}
     <main role="main month">
       <div class="card">
         <div class="card-header d-flex justify-content-between">
@@ -49,6 +47,6 @@
           </div>
         </div>
     </main>
-{% include "footer.html" %}
-  </body>
-</html>
+{% include "modals/new.html" %}
+{% include "modals/edit.html" %}
+{% endblock %}

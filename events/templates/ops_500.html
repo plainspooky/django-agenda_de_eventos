@@ -1,9 +1,5 @@
-{% load staticfiles %}
-<!DOCTYPE html>
-<html lang="pt_BR">
-{% include "header.html" %}
-  <body>
-{# include "navbar.html" #}
+{% extends "base.html" %}{% load staticfiles %}
+{% block content %}
     <main role="main">
       <div class="container py-5">
         <div class="col-12 col-md-6 offset-md-3 text-center">
@@ -18,5 +14,4 @@
         </div>
       </div>
     </main>
-  </body>
-</html>
+{% endblock %}

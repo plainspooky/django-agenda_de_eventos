@@ -14,6 +14,7 @@
             <div class="col-sm-4 offset-md-1 py-4">
               <h4 class="text-white">Opções</h4>
               <ul class="list-unstyled">
+                {% if user.is_authenticated %}
                 <li>
                   <a class="text-white" href="{% url 'agenda-events-day' today.year today.month today.day %}">
                     Eventos de hoje
@@ -29,6 +30,18 @@
                     Administração
                   </a>
                 </li>
+                <li>
+                  <a class="text-white" href="{% url 'auth-logout' %}">
+                    Sair de &quot;{{ user.username }}&quot;...
+                  </a>
+                </li>
+                {% else %}
+                <li>
+                  <a class="text-white" href="{% url 'auth-login' %}">
+                    Entrar...
+                  </a>
+                </li>
+                {% endif %}
               </ul>
             </div>
           </div>

@@ -58,4 +58,6 @@ class Comment(models.Model):
         return g.get_image(default="identicon")
 
     def __str__(self):
-        return "'{}'\n{} em {:%c}".format(self.text, self.author, self.commented)
+        return "'{}'\n{} em {:%c}".format(
+            self.text, self.author, self.commented
+        )

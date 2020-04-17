@@ -1,0 +1,66 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <style>
+    body {
+      background-color:#ddd;
+    }
+    .base {
+      padding:1em;
+    }
+    #output {
+      background-color: #fec;
+      border:solid 1px #d95;
+      margin:2em;
+    }
+    #form {
+      background-color: #9df;
+      border:solid 1px #59d;
+      font-size:75%;
+      margin:0 auto;
+      text-align:center;
+      width:75%;
+    }
+  </style>
+  <body>
+    <div class="base" id="output"></div>
+    <div class="base" id="form">
+      &#x1f464; <input type="text" id="username" placeholder="Usuário">
+      &#x1f512; <input type="password" id="password" placeholder="Senha">
+      <input type="submit" value="&#x1f50e;" onClick="getData()">
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+
+const EVENT_API = '/api/v1/events/'
+
+function getData(){
+
+  let username = $('#username').val();
+  let password = $('#password').val();
+
+  $('#output').empty()
+
+  $.ajax({
+    url: EVENT_API,
+    context: document.body,
+    beforeSend: function(xhr) {
+        xhr.setRequestHeader(
+          'Authorization', 'Basic ' + btoa(username + ':' + password)
+        )
+     },
+  }).done(function (data) {
+    if (data.results.length > 0) {
+      $('#output').append('<tt>' + JSON.stringify(data) + '</tt>')
+    }
+  }).fail(function (data) {
+    $('#output').append('<strong>Erro ao carregar os dados.</strong>')
+  })
+}
+
+    </script>
+  </body>
+</html>

@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.timezone import localdate
 from django.views.defaults import bad_request, server_error
 from rest_framework import filters, viewsets, mixins
+from rest_framework.permissions import IsAuthenticated
 
 from .models import Event, Comment
 from .forms import EventForm, CommentForm
@@ -27,6 +28,8 @@ class EventViewSet(viewsets.ModelViewSet):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
 
+    permission_classes = (IsAuthenticated,)
+
 
 class CommentViewSet(viewsets.ModelViewSet):
     """
@@ -37,6 +40,8 @@ class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
     filter_backends = (filters.SearchFilter,)
     search_fields = ("event__id",)
+
+    permission_classes = (IsAuthenticated,)
 
 
 @login_required

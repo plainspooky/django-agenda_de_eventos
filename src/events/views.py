@@ -13,7 +13,7 @@ from .models import Event, Comment
 from .forms import EventForm, CommentForm
 from .serializers import CommentSerializer, EventSerializer
 
-from .services import split_date
+from .services import split_str_date
 
 
 ITEMS_PER_PAGE = 5
@@ -114,7 +114,7 @@ def delete(request, id: int):
     erro 404, se algo errado ocorrer retornará a página de erro.
     """
     event = get_object_or_404(Event, id=id)
-    (year, month, day) = split_date("{:%Y-%m-%d}".format(event.date))
+    (year, month, day) = split_str_date("{:%Y-%m-%d}".format(event.date))
 
     if event.delete():
         return redirect("agenda-events-day", year=year, month=month, day=day)
@@ -136,7 +136,7 @@ def edit(request):
         event.event = form.cleaned_data["event"]
         event.priority = form.cleaned_data["priority"]
         event.save()
-        (year, month, day) = split_date("{:%Y-%m-%d}".format(event.date))
+        (year, month, day) = split_str_date("{:%Y-%m-%d}".format(event.date))
         return redirect("agenda-events-day", year=year, month=month, day=day)
     else:
         return bad_request(request, None, "ops_400.html")
@@ -152,8 +152,9 @@ def new(request):
 
     if form.is_valid():
         form.save(commit=True)
-        # uso a data enviada pelo formulário para o redirecionamento.
-        (year, month, day) = split_date(request.POST["date"])
+        # e uso a data enviada pelo formulário para o redirecionamento.
+        year, month, day = split_str_date(request.POST["date"])
+
         return redirect("agenda-events-day", year=year, month=month, day=day)
     else:
         return bad_request(request, None, "ops_400.html")

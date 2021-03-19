@@ -1,5 +1,5 @@
 Django<3
-djangorestframework==3.9.4
+djangorestframework==3.11.2
 libgravatar==0.2.3
 pytz==2018.4
 django-filter==2.1.0
